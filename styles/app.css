@@ -53,6 +53,7 @@ a svg{
   color: white;
   text-align: center;
   margin: 10rem 0;
+  background-size: 100%;
 }
 .colortexts {
   position: absolute;
@@ -81,6 +82,13 @@ a svg{
   font-size: 10px;
   line-height: 10px;
   text-align: left;
+}
+.metadata li a {
+  color: gray;
+  text-decoration: none !important;
+}
+.metadata li a:hover {
+  color: #0081FE; /* Social Bubble */
 }
 
 /* Mobile */

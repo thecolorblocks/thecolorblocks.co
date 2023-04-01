@@ -11,8 +11,12 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
   <body x-data="{
+    baseurl: 'https://turbo.ordinalswallet.com/inscription/content',
+    marketBaseurl: 'https://ordinalswallet.com/inscription',
+    idMaxLength: 20,
     colors: [],
     query: '',
+    isIcon: true,
     searchedColors (){
       // Return all if query is empty
       if (this.query.length === 0) return this.colors;
@@ -33,8 +37,32 @@
       return this.searchedColors().length === 0;
     },
     async getColors() {
-      const response = await fetch('/colors.json');
-      return await response.json();
+      const response = await fetch('/collection/inscriptions.json');
+      const colorsResp = await response.json();
+      const colors = [];
+
+      colorsResp.forEach( color => {
+        const c = {
+          id: color.id,
+          name: color.meta.name.match(/\((.*)\)/)[1],
+          hex: `#${color.meta.attributes[0].value}`,
+          decade: color.meta.attributes[1].value,
+          image: `${this.baseurl}/${color.id}`
+        }
+        colors.push(c)
+      });
+      return colors;
+    },
+    shortenString(str) {
+      if (str.length <= this.idMaxLength) {
+        return str;
+      }
+      const ellipsis = '...';
+      const ellipsisLength = ellipsis.length;
+      const midpoint = Math.floor((this.idMaxLength - ellipsisLength) / 2);
+      const beginning = str.slice(0, midpoint);
+      const end = str.slice(-midpoint);
+      return `${beginning}${ellipsis}${end}`;
     },
     async init() {
       this.colors = await this.getColors();
@@ -76,12 +104,12 @@
     </div>
     <template x-for="color in searchedColors('blue')">
       <div class="display">
-        <div class="colorblocks" :style="{ backgroundColor: `${color.hex}` }">
+        <div class="colorblocks" :style="{ backgroundImage: `url('${color.image}')` }">
           <span class="colortexts" x-text="color.name.toUpperCase()" :style="`-webkit-text-stroke-color: ${color.hex};`"></span>
           <span class="metadata">
             <ul>
-              <li><em x-text="color.name.toUpperCase()"></em></li>
-              <li x-text="color.hex"></li>
+              <li><em x-text="`MLCS ${color.hex} (${color.name})`"></em></li>
+              <li><a x-text="`${shortenString(color.id)} ⇨`" :href="`${marketBaseurl}/${color.id}`" target="_blank"></a></li>
               <li x-text="color.decade"></li>
             </ul>
           </span>
