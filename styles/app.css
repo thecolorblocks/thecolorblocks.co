@@ -3,7 +3,7 @@
 body {
   font-family: 'Tilt Warp', sans-serif;
 }
-h1, h4 {
+h1, h2, h3, h4 {
   font-family: 'Rampart One', sans-serif;
   text-align: center;
 }
@@ -31,6 +31,14 @@ a.icon svg {
   width: 23px;
   height: 23px;
 }
+input[type="text"] {
+  border-radius: 0;
+  border: 2px solid gray;
+  transition: border 100ms cubic-bezier(0.000, 0.000, 0.580, 1.000);
+}
+input[type="text"]:focus {
+  border: 2px solid black;
+}
 .border {
   width: 100vw;
   height: 1rem;
@@ -48,38 +56,54 @@ a.icon svg {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   width: 100%;
   height: auto;
   margin: 0 auto;
   gap: 1rem;
 }
+.display.links {
+  margin: 2rem auto 12rem auto;
+}
 .display.punctuate {
-  padding: 5rem 0 0.5rem 0;
+  margin: 5rem auto 0.5rem auto;
 }
 .display.match-width {
   width: 50rem;
 }
-.colorblocks {
+.colorblocks-wrap {
   position: relative;
   width: 50rem;
   height: 50rem;
-  color: white;
-  text-align: center;
   margin: 10rem 0;
+}
+.colorblocks-wrap.first {
+  margin-top: 6rem;
+}
+.colorblocks {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
   background-size: 100%;
+  white-space: nowrap;
+  transition: transform 100ms cubic-bezier(0.000, 0.000, 0.580, 1.000);
 }
 .colortexts {
-  position: absolute;
-  text-align: center;
-  top: 0;
-  left: 0;
   font-size: 8rem;
-  line-height: 50rem;
   text-transform: uppercase;
-  margin-left: -25rem;
-  width: 100rem;
   color: white;
   -webkit-text-stroke-width: 2px;
+  transition: transform 100ms cubic-bezier(0.000, 0.000, 0.580, 1.000);
+}
+.colorblocks:hover {
+  transform: scale(0.99);
+  cursor: pointer;
+}
+.colorblocks:hover .colortexts {
+  transform: scale(1.02);
 }
 .metadata {
   position: absolute;
@@ -92,9 +116,10 @@ a.icon svg {
 }
 .metadata li {
   list-style: none;
-  font-size: 10px;
-  line-height: 10px;
+  font-size: 11px;
+  line-height: 11px;
   text-align: left;
+  font-weight: 600;
 }
 .metadata li a {
   color: gray;
@@ -110,15 +135,12 @@ a.icon svg {
   .display.match-width {
     width: 30rem;
   }
-  .colorblocks {
+  .colorblocks-wrap {
     width: 30rem;
     height: 30rem;
   }
   .colortexts {
     font-size: 5rem;
-    line-height: 30rem;
-    margin-left: -15rem;
-    width: 60rem;
   }
   .metadata {
     top: 30rem;
@@ -131,15 +153,16 @@ a.icon svg {
   .display.match-width {
     width: 80vw;
   }
-  .colorblocks {
+  .colorblocks-wrap {
     width: 80vw;
     height: 80vw;
+    margin: 5rem auto;
+  }
+  .colorblocks-wrap.first {
+    margin-top: 2rem;
   }
   .colortexts {
     font-size: 6.5vw;
-    line-height: 80vw;
-    margin-left: 0;
-    width: 80vw;
     -webkit-text-stroke-width: 0;
   }
   .metadata {
