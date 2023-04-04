@@ -43,7 +43,7 @@
       colorsResp.forEach( color => {
         const c = {
           id: color.id,
-          name: color.meta.name.match(/\((.*)\)/)[1],
+          name: color.meta.name,
           hex: `#${color.meta.attributes[0].value}`,
           decade: color.meta.attributes[1].value,
           image: `${this.baseurl}/${color.id}`
@@ -130,8 +130,8 @@
           </div>
           <span class="metadata">
             <ul>
-              <li><em x-text="`MLCS ${color.hex} (${color.name})`"></em></li>
-              <li><a x-text="`${shortenString(color.id)}`" :href="`${marketBaseurl}/${color.id}`" target="_blank"></a></li>
+              <li><em x-text="color.name"></em></li>
+              <li x-text="color.hex"></li>
               <li x-text="color.decade"></li>
             </ul>
           </span>
